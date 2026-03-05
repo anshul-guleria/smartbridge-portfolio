@@ -1,0 +1,494 @@
+/* ══════════════════════════════════════════════════════
+   PROJECTS — Advanced Card Grid
+══════════════════════════════════════════════════════ */
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 28px;
+  margin-top: 52px;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.3s ease,
+    box-shadow 0.4s ease;
+}
+
+/* Card hover */
+.project-card:hover,
+.project-card:focus-visible {
+  transform: translateY(-8px);
+  border-color: var(--border-strong);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(0, 184, 255, 0.15);
+}
+
+/* ── Accent stripe on left edge ── */
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(to bottom, var(--accent), var(--accent-dim));
+  border-radius: 0 2px 2px 0;
+  transition: height 0.4s ease;
+}
+
+.project-card:hover::before {
+  height: 100%;
+}
+
+/* ── Content ── */
+.project-card__content {
+  padding: 28px 30px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0;
+}
+
+/* Header row */
+.project-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.project-card__year {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  background: rgba(0, 184, 255, 0.1);
+  border: 1px solid rgba(0, 184, 255, 0.18);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+
+.project-card__expand-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.project-card:hover .project-card__expand-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Text */
+.project-card__title {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin: 0;
+  line-height: 1.25;
+  transition: color 0.2s;
+}
+
+.project-card:hover .project-card__title {
+  color: var(--accent-bright);
+}
+
+.project-card__desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.6;
+  flex: 1;
+  margin-block: 10px 24px;
+}
+
+/* Footer: tags */
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag--more {
+  color: var(--text-muted);
+  background: transparent;
+  border-color: var(--border);
+}
+
+/* ── Card footer: status + role ── */
+.project-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.project-card__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+.project-card__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.project-card__role {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════
+   PROJECT MODAL — Overlay + Panel
+══════════════════════════════════════════════════════ */
+
+/* Backdrop */
+.pm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(6, 4, 2, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  animation: overlayIn 0.22s ease both;
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Panel */
+.pm-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: panelSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+}
+
+@keyframes panelSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Close button */
+.pm-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(9, 14, 24, 0.82);
+  border: 1px solid var(--border-strong);
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+  backdrop-filter: blur(6px);
+}
+
+.pm-close:hover {
+  background: rgba(0, 184, 255, 0.18);
+  color: var(--accent-bright);
+  transform: rotate(90deg);
+}
+
+/* ── Content area ── */
+.pm-content {
+  padding: 52px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Year chip in meta row */
+.pm-year-chip {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  padding: 3px 9px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+
+/* Meta row */
+.pm-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.pm-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.pm-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pm-status-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.pm-role-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+/* Title */
+.pm-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 18px;
+}
+
+/* Long description */
+.pm-long-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.85;
+  margin-bottom: 28px;
+}
+
+/* Sections inside modal */
+.pm-section {
+  margin-bottom: 26px;
+}
+
+.pm-section-title {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pm-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Highlights list */
+.pm-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pm-highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.pm-bullet {
+  color: var(--accent);
+  flex-shrink: 0;
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+/* Tags in modal */
+.pm-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Action buttons */
+.pm-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .projects__grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .pm-image-wrap {
+    height: 200px;
+  }
+
+  .pm-content {
+    padding: 20px 20px 28px;
+  }
+
+  .pm-panel {
+    max-height: 95vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .pm-image-wrap {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   PROJECTS — Light theme overrides
+══════════════════════════════════════════════════════ */
+[data-theme="light"] .project-card {
+  background: #fff;
+  border-color: rgba(160, 120, 70, 0.18);
+}
+
+[data-theme="light"] .project-card:hover {
+  box-shadow: 0 24px 60px rgba(0, 40, 80, 0.1), 0 0 40px rgba(0, 160, 223, 0.12);
+  border-color: rgba(0, 160, 223, 0.4);
+}
+
+[data-theme="light"] .project-card__img-container {
+  border-bottom-color: rgba(160, 120, 70, 0.18);
+}
+
+[data-theme="light"] .project-card__img-overlay {
+  background: linear-gradient(0deg, #fff 0%, rgba(255, 255, 255, 0) 80%);
+}
+
+[data-theme="light"] .project-card__year {
+  background: rgba(0, 160, 223, 0.08);
+  border-color: rgba(160, 120, 70, 0.2);
+}
+
+[data-theme="light"] .pm-overlay {
+  background: rgba(9, 14, 24, 0.65);
+}
+
+[data-theme="light"] .pm-panel {
+  background: #fff;
+  border-color: rgba(0, 160, 223, 0.3);
+}
+
+[data-theme="light"] .pm-close {
+  background: rgba(250, 246, 239, 0.9);
+  border-color: rgba(160, 120, 70, 0.3);
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .pm-close:hover {
+  background: rgba(0, 160, 223, 0.12);
+  color: var(--accent);
+}
+
+[data-theme="light"] .pm-image-overlay {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, #fff 100%);
+}
+
+[data-theme="light"] .pm-year-chip {
+  background: rgba(250, 246, 239, 0.85);
+  border-color: rgba(0, 160, 223, 0.35);
+}
+
+[data-theme="light"] .pm-role-badge {
+  background: rgba(0, 160, 223, 0.06);
+  border-color: rgba(160, 120, 70, 0.2);
+  color: var(--text-muted);
+}

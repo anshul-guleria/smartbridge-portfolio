@@ -1,0 +1,309 @@
+/* ══════════════════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════════════════ */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 clamp(20px, 8vw, 80px);
+  height: 66px;
+  background: var(--navbar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--navbar-border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.navbar--scrolled {
+  border-bottom-color: var(--border-strong);
+  box-shadow: 0 2px 32px rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="dark"] .navbar--scrolled {
+  box-shadow: 0 2px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* ── Logo ─────────────────────────────────────────────── */
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--transition);
+  flex-shrink: 0;
+}
+
+.logo:hover {
+  color: var(--accent);
+}
+
+/* ── Nav link pill container ──────────────────────────── */
+.nav-links-area {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  list-style: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 5px;
+  gap: 2px;
+  margin: 0;
+}
+
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 7px 14px;
+  border-radius: 2px;
+  user-select: none;
+  transition: color var(--transition), background var(--transition);
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: rgba(0, 160, 223, 0.08);
+}
+
+[data-theme="light"] .nav-link:hover {
+  background: rgba(0, 160, 223, 0.1);
+}
+
+/* ── Right-side group ─────────────────────────────────── */
+.navbar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.navbar__cta {
+  font-size: 12px;
+  padding: 8px 18px;
+}
+
+/* ══════════════════════════════════════════════════════
+   THEME TOGGLE — pill with sliding thumb
+══════════════════════════════════════════════════════ */
+.theme-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  /* Override global transition reset for toggle */
+  transition: none !important;
+}
+
+/* The outer pill track */
+.theme-toggle__track {
+  display: flex;
+  align-items: center;
+  width: 56px;
+  height: 28px;
+  border-radius: 14px;
+  padding: 3px;
+  position: relative;
+  transition:
+    background 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+
+  /* Dark mode: deep navy track */
+  background: #0D1927;
+  border: 1px solid rgba(0, 160, 223, 0.35);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Light mode: clean light blue-grey track */
+[data-theme="light"] .theme-toggle__track {
+  background: #D0E8F5;
+  border-color: rgba(0, 160, 223, 0.35);
+  box-shadow: inset 0 1px 4px rgba(0, 80, 160, 0.12);
+}
+
+.theme-toggle__track:hover {
+  border-color: var(--accent);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 0 2px var(--accent-glow);
+}
+
+/* The sliding thumb */
+.theme-toggle__thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 2px;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+
+  /* Dark mode: thumb slides to right — SmartBridge blue */
+  transform: translateX(28px);
+  background: #00A0DF;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 160, 223, 0.5);
+}
+
+/* Light mode: thumb slides to left — white with blue shadow */
+[data-theme="light"] .theme-toggle__thumb {
+  transform: translateX(0px);
+  background: #0080B8;
+  box-shadow: 0 1px 6px rgba(0, 80, 160, 0.25), 0 0 10px rgba(0, 160, 223, 0.4);
+}
+
+/* ── Icons inside thumb ───────────────────────────────── */
+.theme-toggle__icon {
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  transition: opacity 0.2s ease, transform 0.3s ease;
+}
+
+/* Sun — visible in light mode */
+.theme-toggle__icon--sun {
+  color: #fff;
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.7);
+}
+
+[data-theme="light"] .theme-toggle__icon--sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Moon — visible in dark mode */
+.theme-toggle__icon--moon {
+  color: #FAF0E0;
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+[data-theme="light"] .theme-toggle__icon--moon {
+  opacity: 0;
+  transform: rotate(45deg) scale(0.7);
+}
+
+/* ══════════════════════════════════════════════════════
+   HAMBURGER
+══════════════════════════════════════════════════════ */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  transition: none !important;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  transition: background 0.2s, transform 0.22s, opacity 0.22s;
+  transform-origin: center;
+}
+
+.hamburger:hover span {
+  background: var(--accent);
+}
+
+/* Animate to X when open */
+.hamburger--open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.hamburger--open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger--open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+@media (max-width: 1200px) {
+
+  /* On mobile the pill container removes its absolute centering
+     and becomes a full-width dropdown anchored below the navbar */
+  .nav-links-area {
+    /* Reset desktop positioning */
+    position: fixed;
+    top: 66px;
+    left: 0;
+    right: 0;
+    transform: none;
+
+    /* Layout */
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100vh - 66px);
+    overflow-y: auto;
+
+    /* Styling */
+    background: var(--navbar-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 16px 20px;
+    gap: 4px;
+    z-index: 999;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-links-area--open {
+    display: flex;
+  }
+
+  .nav-link {
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Hide contact CTA on mobile */
+  .navbar__cta {
+    display: none;
+  }
+
+  /* Show hamburger */
+  .hamburger {
+    display: flex;
+  }
+}

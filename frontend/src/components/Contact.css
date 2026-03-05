@@ -1,0 +1,219 @@
+/* ─── Contact ─────────────────────────────────────────── */
+.contact__heading-area {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.contact__heading-area .section-label {
+  justify-content: center;
+}
+
+.contact__headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+}
+
+.contact__headline em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.contact__subtext {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ─── 3 Card Grid ──────────────────────────────────────── */
+.contact__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .contact__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .contact__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Individual Contact Card ──────────────────────────── */
+.contact__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Warm shimmer hover effect */
+.contact__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+      rgba(0, 184, 255, 0.0) 0%,
+      rgba(0, 184, 255, 0.05) 50%,
+      rgba(0, 184, 255, 0.0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* Bottom hairline */
+.contact__card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.contact__card:hover,
+.contact__card:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--border-strong);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    0 0 32px rgba(0, 184, 255, 0.1);
+}
+
+.contact__card:hover::before,
+.contact__card:focus-visible::before {
+  opacity: 1;
+}
+
+.contact__card:hover::after,
+.contact__card:focus-visible::after {
+  opacity: 1;
+}
+
+/* ─── Card Content ─────────────────────────────────────── */
+.contact__card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(0, 184, 255, 0.08);
+  border: 1px solid rgba(0, 184, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 24px;
+  color: var(--accent);
+  transition: background var(--transition), border-color var(--transition), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.contact__card:hover .contact__card-icon {
+  background: rgba(0, 184, 255, 0.18);
+  border-color: var(--border-strong);
+  transform: scale(1.1);
+}
+
+.contact__card-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.2px;
+}
+
+.contact__card-desc {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+
+.contact__card-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  transition: color var(--transition);
+}
+
+.contact__card:hover .contact__card-value {
+  color: var(--accent-bright);
+}
+
+/* ─── Footer ───────────────────────────────────────────── */
+.contact__footer {
+  text-align: center;
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.contact__footer-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   CONTACT — Light theme overrides
+══════════════════════════════════════════════════════ */
+[data-theme="light"] .contact__card {
+  background: #fff;
+  border-color: rgba(160, 120, 70, 0.18);
+}
+
+[data-theme="light"] .contact__card::before {
+  background: linear-gradient(135deg,
+      rgba(0, 160, 223, 0) 0%, rgba(0, 160, 223, 0.05) 50%, rgba(0, 160, 223, 0) 100%);
+}
+
+[data-theme="light"] .contact__card:hover {
+  border-color: rgba(0, 160, 223, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 40, 80, 0.12), 0 0 28px rgba(0, 160, 223, 0.1);
+}
+
+[data-theme="light"] .contact__card-icon {
+  background: rgba(0, 160, 223, 0.06);
+  border-color: rgba(160, 120, 70, 0.2);
+}
+
+[data-theme="light"] .contact__card:hover .contact__card-icon {
+  background: rgba(0, 160, 223, 0.12);
+}
+
+[data-theme="light"] .contact__footer {
+  border-top-color: var(--border);
+}

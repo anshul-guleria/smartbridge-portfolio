@@ -1,0 +1,372 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ══════════════════════════════════════════════════════
+   DARK THEME — Cosmic Ink (default)
+   Palette: near-black bg · blue-violet depth ·
+             SmartBridge cyan glow · icy type
+══════════════════════════════════════════════════════ */
+:root {
+  /* Backgrounds — Cosmic Ink: near-black with a whisper of blue-violet */
+  --bg-base: #05070D;
+  --bg-surface: #090C16;
+  --bg-card: #0E1220;
+  --bg-card-hover: #141828;
+
+  /* Borders — icy blue glow edges */
+  --border: rgba(0, 180, 255, 0.12);
+  --border-strong: rgba(0, 180, 255, 0.38);
+
+  /* Accent — SmartBridge Blue (brighter for dark bg contrast) */
+  --accent: #00B8FF;
+  --accent-bright: #40CCFF;
+  --accent-dim: #0088CC;
+  --accent-glow: rgba(0, 184, 255, 0.18);
+
+  /* Secondary Accents */
+  --accent-green: #A8D832;
+  --accent-red: #FF4040;
+
+  /* Text — cool white with icy secondary — high contrast */
+  --text-primary: #F0F6FF;
+  --text-secondary: #7B93B3;
+  --text-muted: #2E3D52;
+
+  /* Fonts (shared) */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Lato', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Shape (shared) */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+
+  /* Shadows — deep darkness + blue ambient glow */
+  --shadow-card: 0 8px 48px rgba(0, 0, 0, 0.70);
+  --shadow-glow: 0 0 40px rgba(0, 184, 255, 0.14);
+
+  /* Motion (shared) */
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Navbar — ultra-dark frosted glass */
+  --navbar-bg: rgba(5, 7, 13, 0.92);
+  --navbar-border: rgba(0, 180, 255, 0.12);
+}
+
+
+/* ══════════════════════════════════════════════════════
+   LIGHT THEME — SmartBridge Clean White
+   Palette: white bg · charcoal text · SmartBridge blue accent
+══════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  /* Backgrounds — clean white / light grey */
+  --bg-base: #F4F7FA;
+  --bg-surface: #EBF0F5;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F0F6FF;
+
+  /* Borders — cool blue-grey */
+  --border: rgba(0, 100, 160, 0.14);
+  --border-strong: rgba(0, 160, 223, 0.38);
+
+  /* Accent — SmartBridge Blue */
+  --accent: #0080B8;
+  --accent-bright: #00A0DF;
+  --accent-dim: #005E8A;
+  --accent-glow: rgba(0, 160, 223, 0.10);
+
+  /* Secondary Accents */
+  --accent-green: #6E9A00;
+  --accent-red: #CC1F1F;
+
+  /* Text — charcoal / dark slate (matches SmartBridge logo text) */
+  --text-primary: #2D3748;
+  --text-secondary: #4A5568;
+  --text-muted: #A0AEC0;
+
+  /* Shadows — clean, cool */
+  --shadow-card: 0 4px 24px rgba(0, 80, 160, 0.08);
+  --shadow-glow: 0 0 28px rgba(0, 160, 223, 0.14);
+
+  /* Navbar — white frosted */
+  --navbar-bg: rgba(255, 255, 255, 0.94);
+  --navbar-border: rgba(0, 160, 223, 0.18);
+}
+
+
+/* ══════════════════════════════════════════════════════
+   GLOBAL THEME TRANSITION
+   Smooth crossfade of all colour tokens
+══════════════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition:
+    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* But don't transition transforms / outlines / etc on generic elements */
+button,
+a {
+  transition: all var(--transition);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Grain texture — darker in dark mode, barely-visible in light */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.45;
+}
+
+[data-theme="light"] body::before {
+  opacity: 0.25;
+}
+
+
+/* ── Section layout ──────────────────────────────────── */
+.section {
+  padding: 110px 0;
+  position: relative;
+}
+
+.section+.section {
+  border-top: 1px solid var(--border);
+}
+
+.section-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 8vw, 80px);
+}
+
+/* ── Section eyebrow ─────────────────────────────────── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.section-label__line {
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  flex-shrink: 0;
+}
+
+.section-label__text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* ── Card ────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-glow);
+}
+
+/* ── Tag ─────────────────────────────────────────────── */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--accent);
+  background: rgba(0, 184, 255, 0.1);
+  border: 1px solid rgba(0, 184, 255, 0.22);
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+[data-theme="light"] .tag {
+  background: rgba(0, 184, 255, 0.08);
+  border-color: rgba(0, 184, 255, 0.22);
+}
+
+.tag:hover {
+  background: rgba(0, 184, 255, 0.18);
+  border-color: rgba(0, 184, 255, 0.45);
+}
+
+[data-theme="light"] .tag:hover {
+  background: rgba(0, 184, 255, 0.16);
+  border-color: rgba(0, 184, 255, 0.45);
+}
+
+/* ── Button ──────────────────────────────────────────── */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 11px 26px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+[data-theme="light"] .btn-primary {
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-bright);
+  box-shadow: 0 4px 24px rgba(0, 160, 223, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--border-strong);
+}
+
+.btn-outline:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+}
+
+/* ── Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+::selection {
+  background: rgba(0, 160, 223, 0.28);
+  color: var(--text-primary);
+}
+
+@media (max-width: 750px) {
+  .section {
+    padding: 80px 0;
+  }
+}
+
+
+/* ── App loading / error screens ─────────────────────── */
+.app-loading,
+.app-error {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--bg-base);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.app-loading__spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 160, 223, 0.2);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-error__icon {
+  font-size: 2rem;
+}
+
+.app-error p {
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.app-error code {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: #e05252;
+  max-width: 500px;
+  text-align: center;
+}
+
+.app-error small {
+  color: var(--text-muted);
+  font-size: 11px;
+  max-width: 420px;
+  text-align: center;
+  line-height: 1.6;
+}

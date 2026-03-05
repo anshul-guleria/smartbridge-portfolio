@@ -1,0 +1,195 @@
+{
+  "personal": {
+    "name": "Anshul Guleria",
+    "initials": "AG",
+    "image": "https://ik.imagekit.io/anshulguleria/20250927_144652.jpg.jpeg",
+    "tagline": "I build intelligent systems for the real world.",
+    "bio": "AIML Intern at TheSmartBridge, contributing to next-generation solutions powered by AI. Specializing in Machine Learning, Generative AI, and deploying production-grade FastAPI applications within SmartBridge's ecosystem.",
+    "location": "Delhi, India",
+    "email": "anshulguleria2002@gmail.com",
+    "phone": "+91-8219936513",
+    "linkedin": "https://linkedin.com/in/anshul-guleria",
+    "github": "https://github.com/anshul-guleria"
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "MentorMind - AI Tutor App",
+      "description": "End-to-end AI tutoring system supporting semantic document search, adaptive quizzes, and context-aware responses using RAG and LLMs.",
+      "longDescription": "MentorMind is a full-stack AI tutoring platform built with FastAPI and PostgreSQL. It uses a Retrieval-Augmented Generation (RAG) pipeline powered by Pinecone and SentenceTransformers to deliver context-aware responses from uploaded study material. The system integrates Llama 3 and Gemini APIs to automate quiz generation and produce adaptive learning summaries tailored to each student. All endpoints are secured with JWT authentication and role-based access control, making it production-ready.",
+      "tags": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "Streamlit",
+        "Pinecone",
+        "RAG",
+        "Llama 3",
+        "Gemini",
+        "Whisper"
+      ],
+      "link": "#",
+      "github": "https://github.com/anshul-guleria/MentorMind-AI-Tutor",
+      "docs": "https://github.com/anshul-guleria/MentorMind-AI-Tutor/blob/main/README.md",
+      "video": "",
+      "year": "2026",
+      "role": "Solo Developer",
+      "status": "Completed",
+      "highlights": [
+        "Designed end-to-end RAG pipeline using Pinecone + SentenceTransformers for semantic search",
+        "Integrated Llama 3 and Gemini APIs for automated quiz generation and adaptive summaries",
+        "Secured all APIs with JWT authentication and role-based access control",
+        "Built interactive Streamlit frontend connected to FastAPI backend"
+      ],
+      "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80"
+    },
+    {
+      "id": 2,
+      "title": "Demand-Supply Chain Gap Prediction",
+      "description": "LSTM-based time-series forecasting model to predict demand trends and reduce supply chain gaps, deployed as a Streamlit dashboard.",
+      "longDescription": "This project tackles demand forecasting in supply chain management using a deep learning approach. An LSTM network was built with TensorFlow to capture temporal dependencies in demand data. Extensive feature engineering was performed — including lag features and rolling statistics — to improve model stability and accuracy. The final model significantly outperforms baseline regression approaches on RMSE and was packaged as reusable artifacts deployed through an interactive Streamlit dashboard.",
+      "tags": [
+        "Python",
+        "TensorFlow",
+        "LSTM",
+        "Scikit-learn",
+        "Pandas",
+        "Streamlit",
+        "Matplotlib"
+      ],
+      "link": "#",
+      "github": "https://github.com/anshul-guleria/Demand-Supply-Gap-Prediction",
+      "year": "2026",
+      "role": "Solo Developer",
+      "status": "Completed",
+      "highlights": [
+        "Built LSTM time-series model in TensorFlow capturing complex temporal demand patterns",
+        "Engineered lag and rolling features that significantly improved forecasting stability",
+        "Reduced RMSE compared to baseline linear regression models",
+        "Packaged reusable model artifacts for efficient inference via Streamlit dashboard"
+      ],
+      "image": "https://ik.imagekit.io/anshulguleria/demand-supply"
+    }
+  ],
+  "experience": [
+    {
+      "id": 1,
+      "role": "AI/ML Intern",
+      "company": "TheSmartBridge",
+      "duration": "Jan 2026 - Present",
+      "location": "Noida, India",
+      "description": "Working on real-world AI and ML projects in a professional setting. Responsibilities span model development and evaluation, API development, and building Generative AI applications using state-of-the-art LLMs.",
+      "highlights": [
+        "Developed and evaluated various ML and DL models for production use",
+        "Built REST APIs using FastAPI for model serving and integration",
+        "Worked on Generative AI projects leveraging Gemini and Llama 3 LLMs"
+      ]
+    },
+    {
+      "id": 2,
+      "role": "M.Sc. Data Science and Artificial Intelligence",
+      "company": "Himachal Pradesh University",
+      "duration": "July 2024 - June 2026",
+      "location": "Shimla, India",
+      "description": "I hold a Master's degree in Data Science and Artificial Intelligence, where I developed strong expertise in machine learning, statistical modeling, and data-driven decision-making.",
+      "highlights": []
+    },
+    {
+      "id": 3,
+      "role": "B.Sc. (Hons.) Computer Science",
+      "company": "Delhi University",
+      "duration": "July 2021 - June 2024",
+      "location": "Delhi, India",
+      "description": "I completed a BSc (Hons) in Computer Science, where I built a strong foundation in programming, algorithms, data structures, and software development. The program strengthened my problem-solving skills and technical expertise, preparing me to design, develop, and optimize efficient computing solutions. CGPA: 8.66",
+      "highlights": []
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Science in Data Science and Artificial Intelligence",
+      "institution": "Himachal Pradesh University, Shimla",
+      "duration": "2024 - 2026"
+    },
+    {
+      "degree": "Bachelor of Science (Honours) in Computer Science",
+      "institution": "University of Delhi, New Delhi",
+      "duration": "2021 - 2024",
+      "grade": "CGPA: 8.66"
+    }
+  ],
+  "skills": {
+    "ML / DL": [
+      "TensorFlow",
+      "Scikit-learn",
+      "LSTM",
+      "CNN",
+      "Transformers",
+      "Transfer Learning"
+    ],
+    "GenAI & LLMs": [
+      "RAG",
+      "Prompt Engineering",
+      "Llama 3",
+      "Gemini",
+      "Pinecone",
+      "SentenceTransformers"
+    ],
+    "Backend": [
+      "FastAPI",
+      "Flask",
+      "Streamlit",
+      "REST APIs",
+      "JWT Auth"
+    ],
+    "Programming": [
+      "Python",
+      "C++",
+      "SQL",
+      "JavaScript"
+    ],
+    "Databases": [
+      "PostgreSQL",
+      "MongoDB",
+      "Supabase",
+      "Vector Databases"
+    ],
+    "Tools": [
+      "Git",
+      "GitHub",
+      "Google Colab",
+      "DSA"
+    ]
+  },
+  "achievements": [
+    "Python for Data Science — IBM Certification",
+    "Software Engineer Intern Certificate — HackerRank",
+    "Microsoft Power BI for Beginners Certification",
+    "300+ problems solved on LeetCode"
+  ],
+  "mentoring": {
+    "title": "Hackathon Mentoring",
+    "description": "Actively mentoring and guiding students at inter-university hackathons, helping them brainstorm, architect, and build innovative solutions.",
+    "photos": [
+      "../public/mentoring1.jpg",
+      "../public/mentoring2.jpg"
+    ]
+  },
+  "certifications": [
+    {
+      "name": "Python for Data Science — IBM Certification",
+      "image": "../public/certificate_python_for_data_science_IBM.jpg"
+    },
+    {
+      "name": "Software Engineer Intern Certificate — HackerRank",
+      "image": "../public/certificate_hackerrank_software_intern.png"
+    },
+    {
+      "name": "Microsoft Power BI for Beginners Certification",
+      "image": "../public/certificate_powerbi_beginners.png"
+    },
+    {
+      "name": "AWS Cloud Practitioner Essentials Certification",
+      "image": "../public/certificate_aws_cloud_practitioner_essentials.jpg"
+    }
+  ]
+}

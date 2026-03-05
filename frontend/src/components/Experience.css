@@ -1,0 +1,496 @@
+/* ══════════════════════════════════════════════════════
+   EXPERIENCE — Vertical Branching Timeline
+══════════════════════════════════════════════════════ */
+
+/* ── Outer wrapper ───────────────────────────────────── */
+.tl {
+  position: relative;
+  margin-top: 64px;
+  padding-bottom: 40px;
+
+  /* All rows align against this centre column */
+  --spine-x: 50%;
+}
+
+/* ── Vertical spine ──────────────────────────────────── */
+.tl__spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--spine-x);
+  transform: translateX(-50%);
+  width: 2px;
+
+  /* Glowing gradient spine — bright at top, fades out at bottom */
+  background: linear-gradient(to bottom,
+      var(--accent) 0%,
+      rgba(0, 184, 255, 0.5) 40%,
+      rgba(0, 184, 255, 0.2) 70%,
+      transparent 100%);
+  box-shadow: 0 0 12px rgba(0, 184, 255, 0.3);
+}
+
+/* ── Each timeline row ───────────────────────────────── */
+.tl__row {
+  position: relative;
+  display: grid;
+  /* spacer | node-zone (40px) | branch (48px) | card */
+  grid-template-columns: 1fr 20px 48px 1fr;
+  align-items: flex-start;
+  margin-bottom: 0;
+
+  /* Stagger fade-in */
+  animation: tlRowIn 0.5s ease both;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes tlRowIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+  Left layout:  [spacer][node][branch→][card]
+  Right layout: [card][←branch][node][spacer]  — achieved by reversing the grid
+*/
+.tl__row--left {
+  /* default: card is on the right */
+}
+
+.tl__row--right {
+  direction: rtl;
+  /* flip the whole row */
+}
+
+.tl__row--right>* {
+  direction: ltr;
+  /* but keep children LTR */
+}
+
+/* The empty spacer on the opposite side of the card */
+.tl__spacer {
+  /* just a placeholder cell */
+}
+
+/* ── Spine node ──────────────────────────────────────── */
+.tl__node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  padding-top: 22px;
+  /* vertically centre with card header */
+  z-index: 2;
+}
+
+.tl__node-ring {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 184, 255, 0.35);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tl__node-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(0, 184, 255, 0.5);
+  position: relative;
+  z-index: 1;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+/* Current / most-recent node — bigger + brighter */
+.tl__node--current .tl__node-ring {
+  width: 26px;
+  height: 26px;
+  border-color: var(--accent);
+  box-shadow: 0 0 14px rgba(0, 184, 255, 0.4);
+  animation: nodePulse 2.5s ease-in-out infinite;
+}
+
+.tl__node--current .tl__node-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--accent-bright);
+  box-shadow: 0 0 14px rgba(232, 173, 84, 0.7);
+}
+
+@keyframes nodePulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(0, 184, 255, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 22px rgba(0, 184, 255, 0.7);
+  }
+}
+
+/* ── Branch connector ────────────────────────────────── */
+.tl__branch {
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 184, 255, 0.6), rgba(0, 184, 255, 0.2));
+  align-self: start;
+  margin-top: 31px;
+  /* vertically aligns with node centre */
+  border-radius: 1px;
+}
+
+/* For right-side rows the branch reverses direction */
+.tl__row--right .tl__branch {
+  background: linear-gradient(90deg, rgba(0, 184, 255, 0.2), rgba(0, 184, 255, 0.6));
+}
+
+/* ── Card ────────────────────────────────────────────── */
+.tl__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 22px 24px;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+/* Tiny amber triangle "tip" pointing toward the spine */
+.tl__row--left .tl__card::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: -7px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 7px solid var(--border);
+  transition: border-right-color 0.22s;
+}
+
+.tl__row--right .tl__card::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  right: -7px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 7px solid var(--border);
+  transition: border-left-color 0.22s;
+}
+
+.tl__card:hover,
+.tl__card:focus-visible {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(0, 184, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.tl__card--open {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.45), 0 0 28px rgba(0, 184, 255, 0.12);
+}
+
+/* ── Card header ─────────────────────────────────────── */
+.tl__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tl__card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tl__duration {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(0, 184, 255, 0.1);
+  border: 1px solid rgba(0, 184, 255, 0.2);
+  padding: 3px 9px;
+  border-radius: 3px;
+}
+
+.tl__badge-current {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bg-base);
+  background: var(--accent-bright);
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+/* Chevron toggle */
+.tl__chevron {
+  font-size: 22px;
+  color: var(--text-muted);
+  line-height: 1;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s;
+  display: inline-block;
+  user-select: none;
+}
+
+.tl__chevron--open {
+  transform: rotate(90deg);
+  color: var(--accent);
+}
+
+.tl__card:hover .tl__chevron {
+  color: var(--accent-dim);
+}
+
+/* ── Role + company ──────────────────────────────────── */
+.tl__role {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+.tl__company-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tl__company {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-dim);
+  letter-spacing: 0.3px;
+}
+
+.tl__sep {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.tl__location {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* ── Expandable details ──────────────────────────────── */
+.tl__details {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition:
+    max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    margin-top 0.3s ease;
+}
+
+.tl__details--visible {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 18px;
+}
+
+.tl__description {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.tl__highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.tl__highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.tl__bullet {
+  color: var(--accent);
+  flex-shrink: 0;
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+/* ── End cap ─────────────────────────────────────────── */
+.tl__endcap {
+  position: relative;
+  left: var(--spine-x);
+  transform: translateX(-50%);
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.tl__endcap-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  border: 2px solid var(--bg-card);
+  box-shadow: 0 0 0 2px var(--text-muted);
+}
+
+.tl__endcap-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE — collapse to single-column on mobile
+══════════════════════════════════════════════════════ */
+@media (max-width: 700px) {
+  .tl {
+    --spine-x: 16px;
+  }
+
+  /* Single column: node | branch | card */
+  .tl__row {
+    grid-template-columns: 0 20px 28px 1fr;
+    direction: ltr !important;
+    /* cancel the right-side flip */
+  }
+
+  .tl__row--right {
+    direction: ltr;
+  }
+
+  .tl__row--right>* {
+    direction: ltr;
+  }
+
+  /* Branch points right on both sides */
+  .tl__row--right .tl__branch {
+    background: linear-gradient(90deg, rgba(196, 140, 60, 0.6), rgba(196, 140, 60, 0.2));
+  }
+
+  /* Remove triangle tip on mobile */
+  .tl__card::before {
+    display: none;
+  }
+
+  .tl__card {
+    margin-bottom: 20px;
+    padding: 18px 16px;
+  }
+
+  .tl__role {
+    font-size: 1rem;
+  }
+
+  .tl__endcap {
+    left: var(--spine-x);
+    transform: translateX(-50%);
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   EXPERIENCE — Light theme overrides
+══════════════════════════════════════════════════════ */
+[data-theme="light"] .tl__spine {
+  background: linear-gradient(to bottom,
+      var(--accent) 0%,
+      rgba(0, 160, 223, 0.45) 40%,
+      rgba(0, 160, 223, 0.18) 70%,
+      transparent 100%);
+  box-shadow: 0 0 10px rgba(0, 160, 223, 0.2);
+}
+
+[data-theme="light"] .tl__node-dot {
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(0, 160, 223, 0.5);
+}
+
+[data-theme="light"] .tl__node-ring {
+  border-color: rgba(0, 160, 223, 0.35);
+}
+
+[data-theme="light"] .tl__node--current .tl__node-ring {
+  border-color: var(--accent);
+  box-shadow: 0 0 14px rgba(0, 160, 223, 0.35);
+}
+
+[data-theme="light"] .tl__node--current .tl__node-dot {
+  background: var(--accent-bright);
+  box-shadow: 0 0 14px rgba(212, 120, 42, 0.6);
+}
+
+[data-theme="light"] .tl__branch {
+  background: linear-gradient(90deg, rgba(0, 160, 223, 0.5), rgba(0, 160, 223, 0.15));
+}
+
+[data-theme="light"] .tl__row--right .tl__branch {
+  background: linear-gradient(90deg, rgba(0, 160, 223, 0.15), rgba(0, 160, 223, 0.5));
+}
+
+[data-theme="light"] .tl__card {
+  background: #fff;
+  border-color: rgba(160, 120, 70, 0.18);
+}
+
+[data-theme="light"] .tl__card:hover,
+[data-theme="light"] .tl__card--open {
+  border-color: rgba(0, 160, 223, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 40, 80, 0.1), 0 0 24px rgba(0, 160, 223, 0.1);
+}
+
+[data-theme="light"] .tl__row--left .tl__card::before {
+  border-right-color: rgba(160, 120, 70, 0.2);
+}
+
+[data-theme="light"] .tl__row--right .tl__card::before {
+  border-left-color: rgba(160, 120, 70, 0.2);
+}
+
+[data-theme="light"] .tl__endcap-dot {
+  background: var(--text-muted);
+  box-shadow: 0 0 0 2px var(--text-muted);
+}
