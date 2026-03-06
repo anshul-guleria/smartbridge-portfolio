@@ -170,8 +170,8 @@
     "title": "Hackathon Mentoring",
     "description": "Actively mentoring and guiding students at inter-university hackathons, helping them brainstorm, architect, and build innovative solutions.",
     "photos": [
-      "../public/mentoring1.jpg",
-      "../public/mentoring2.jpg"
+      "https://ik.imagekit.io/anshulguleria/mentoring1.jpg",
+      "https://ik.imagekit.io/anshulguleria/mentoring2.jpg"
     ]
   },
   "certifications": [
@@ -181,15 +181,15 @@
     },
     {
       "name": "Software Engineer Intern Certificate — HackerRank",
-      "image": "../public/certificate_hackerrank_software_intern.png"
+      "image": "https://ik.imagekit.io/anshulguleria/certificate_hackerrank_software_intern.png"
     },
     {
       "name": "Microsoft Power BI for Beginners Certification",
-      "image": "../public/certificate_powerbi_beginners.png"
+      "image": "https://ik.imagekit.io/anshulguleria/certificate_powerbi_beginners.png"
     },
     {
       "name": "AWS Cloud Practitioner Essentials Certification",
-      "image": "../public/certificate_aws_cloud_practitioner_essentials.jpg"
+      "image": "https://ik.imagekit.io/anshulguleria/certificate_aws_cloud_practitioner_essentials.jpg"
     }
   ]
 }
